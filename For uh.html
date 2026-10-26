@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>for uhh! ♡</title>
+<style>
+:root{--p:#ffd6e9;--b:#c9efff;--r:#e77ca9;--ink:#624d70}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Trebuchet MS",sans-serif;color:var(--ink);
+background:linear-gradient(135deg,#ffd5e8,#f0e4ff,#c7efff);background-attachment:fixed}
+main{max-width:760px;margin:auto;padding:20px 14px 50px}
+.top{display:flex;justify-content:space-between;gap:8px}
+.pill{padding:8px 13px;background:#ffffffaa;border:1px solid white;border-radius:30px;font-size:12px}
+.screen{display:none;text-align:center;animation:in .3s}
+.screen.active{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:clamp(36px,8vw,60px);color:#df70a1;line-height:1.1}
+h1 span{color:#62b4df}h2{color:#d76e9f}
+p{line-height:1.6}
+.card{margin:22px auto;padding:20px;border:2px solid white;border-radius:26px;
+background:linear-gradient(135deg,#fff0f8e8,#e4f7ffe8);box-shadow:0 10px 30px #b98ebf30}
+button,.btn{font:inherit;font-weight:bold;border:2px solid white;border-radius:15px;
+padding:11px 18px;margin:5px;color:#624d70;
+background:linear-gradient(120deg,#ffbcd7,#b9e8ff);box-shadow:0 4px 0 #d6c4e8;
+cursor:pointer;text-decoration:none;display:inline-block}
+button:active{transform:translateY(2px)}
+.big{font-size:65px;margin:15px}
+.sticker{position:fixed;z-index:-1;font-size:35px;pointer-events:none}
+.st1{top:18%;left:2%}.st2{top:42%;right:2%}.st3{bottom:13%;left:3%}.st4{bottom:22%;right:3%}
+canvas{display:block;width:100%;max-width:640px;margin:12px auto;border:2px solid white;border-radius:18px;touch-action:manipulation}
+#puzzle{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;max-width:440px;margin:18px auto}
+.piece{aspect-ratio:1;margin:0;padding:0;border:1px solid #ffffffc9;border-radius:0;box-shadow:none;
+background-image:var(--photo);background-size:400% 400%;background-repeat:no-repeat;position:relative}
+.piece:nth-child(4n+1){clip-path:polygon(0 0,70% 0,70% 12%,85% 12%,85% 27%,70% 27%,70% 100%,0 100%)}
+.piece:nth-child(4n+2){clip-path:polygon(0 0,100% 0,100% 70%,85% 70%,85% 85%,70% 85%,70% 70%,0 70%)}
+.piece:nth-child(4n+3){clip-path:polygon(0 0,100% 0,100% 100%,30% 100%,30% 85%,15% 85%,15% 70%,30% 70%,30% 0)}
+.piece:nth-child(4n){clip-path:polygon(0 0,70% 0,70% 70%,85% 70%,85% 85%,70% 85%,70% 100%,0 100%)}
+.piece.selected{outline:3px solid #e77ca9;filter:brightness(1.1)}
+#puzzleStatus{min-height:25px;color:#c85f95;font-weight:bold}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:18px auto}
+.cell{aspect-ratio:1;font-size:35px;margin:0;padding:0}
+.kissbox{min-height:240px;border-radius:22px;background:linear-gradient(135deg,#ffe0ee,#d8f2ff);
+display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:14px;padding:20px}
+.kissbox span{font-size:35px;animation:bob 1.4s infinite}
+@keyframes bob{50%{transform:translateY(-9px) rotate(8deg)}}
+.rain{position:fixed;top:-45px;z-index:999;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(380deg);opacity:0}}
+#photoPreview{max-width:100%;max-height:160px;border-radius:12px}
+@media(max-width:500px){.sticker{font-size:25px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<div class="sticker st1">♡</div><div class="sticker st2">🐉</div>
+<div class="sticker st3">✨</div><div class="sticker st4">💗</div>
+<main>
+<div class="top"><span class="pill">for uhh! ♡</span><span class="pill">pink + sky blue</span></div>
+
+<section class="screen active" id="s0">
+<h1>Babyyyy,<br><span>Jannnn Mateeeennnn!</span></h1>
+<p>Janemann cutie pieee ♡</p><div class="big">🩷</div>
+<button onclick="go(1)">♡</button>
+</section>
+
+<section class="screen" id="s1"><div class="card">
+<div class="big">♫</div><h2>Apka song ♡</h2>
+<a class="btn" href="https://youtu.be/ORFwfKHMrYs?si=5tLEIB57k-x09k6L" target="_blank" rel="noopener">♫</a>
+<p><button onclick="go(2)">♡</button></p>
+</div></section>
+
+<section class="screen" id="s2"><div class="card">
+<h2>Dragon Dash ♡</h2>
+<p>Coins: <b id="coins">0</b> &nbsp; Hearts: <b id="hearts">0</b></p>
+<canvas id="game" width="640" height="300"></canvas>
+<button onclick="jump()">JUMP ♡</button><button onclick="fire()">FIRE!</button>
+<button onclick="resetGame()">AGAIN</button><p><button onclick="go(3)">♡</button></p>
+</div></section>
+
+<section class="screen" id="s3"><div class="card">
+<h2>Hamari picture ♡</h2>
+<p class="small">Apni couple picture select karein:</p>
+<input id="photoInput" type="file" accept="image/*">
+<p><img id="photoPreview" alt=""></p>
+<div id="puzzle"></div><div id="puzzleStatus"></div>
+<button onclick="shufflePuzzle()">SHUFFLE ♡</button><button onclick="go(4)">♡</button>
+</div></section>
+
+<section class="screen" id="s4"><div class="card">
+<h2>Tick ya Cross?</h2><p>Ap X hain, computer O hai. ♡</p>
+<div class="board" id="board"></div><p id="status">Apki baari ♡</p>
+<button onclick="resetTTT()">AGAIN</button><button onclick="go(5)">♡</button>
+</div></section>
+
+<section class="screen" id="s5"><div class="card">
+<h2>For my cutie pie ♡</h2>
+<div class="kissbox" id="kissbox"><span>🐰</span><span>♡</span><span>💋</span></div>
+<button onclick="rainHearts()">♡</button><p><button onclick="go(6)">♡</button></p>
+</div></section>
+
+<section class="screen" id="s6"><div class="card">
+<h2>Janemann cutie pieee ♡</h2><div class="big">💋</div>
+<p>Ap aur main. Bas ♡</p><button onclick="go(0)">♡</button>
+</div></section>
+</main>
+
+<script>
+function go(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById("s"+n).classList.add("active");scrollTo({top:0,behavior:"smooth"});if(n===2)resetGame()}
+
+/* Dragon running game */
+const c=document.getElementById("game"),x=c.getContext("2d");
+let dy=205,vy=0,obs=[],items=[],flames=[],tick=0,coins=0,hearts=0,alive=true;
+function jump(){if(!alive){resetGame();return}if(dy>=204)vy=-12}
+function fire(){if(alive)flames.push({x:110,y:dy+17,life:25})}
+function resetGame(){dy=205;vy=0;obs=[];items=[];flames=[];tick=0;coins=0;hearts=0;alive=true;document.getElementById("coins").textContent=0;document.getElementById("hearts").textContent=0}
+c.addEventListener("pointerdown",e=>{let r=c.getBoundingClientRect();if(e.clientX-r.left>r.width*.78)fire();else jump()});
+window.addEventListener("keydown",e=>{if(!document.getElementById("s2").classList.contains("active"))return;if(e.code==="Space"||e.code==="ArrowUp"){e.preventDefault();jump()}if(e.code==="KeyF")fire()});
+function loop(){
+requestAnimationFrame(loop);x.clearRect(0,0,640,300);
+let g=x.createLinearGradient(0,0,0,300);g.addColorStop(0,"#c6edff");g.addColorStop(1,"#fff0f8");x.fillStyle=g;x.fillRect(0,0,640,300);
+x.fillStyle="#ffffffaa";for(let i=0;i<4;i++){let xx=(i*180-tick*.5%720+720)%720-30;x.beginPath();x.arc(xx,45+i%2*20,17,0,7);x.arc(xx+18,47+i%2*20,21,0,7);x.fill()}
+x.fillStyle="#d9c9f5";x.beginPath();x.moveTo(0,235);for(let a=0;a<=640;a+=40)x.lineTo(a,210+Math.sin(a/45+tick/45)*14);x.lineTo(640,300);x.lineTo(0,300);x.fill();
+x.fillStyle="#ffcfe4";x.fillRect(0,250,640,50);
+if(alive){tick++;let speed=4+Math.min(tick/650,3);
+if(tick%Math.max(35,67-Math.floor(tick/150))===0)obs.push({x:660,t:Math.floor(Math.random()*4),w:30+Math.random()*15,h:25+Math.random()*30,p:Math.random()*5});
+if(tick%42===0)items.push({x:660,y:95+Math.random()*100,t:Math.random()<.7?"coin":"heart",got:false});
+obs.forEach(o=>o.x-=speed);items.forEach(a=>a.x-=speed);flames.forEach(f=>{f.x+=9;f.life--});
+for(let f of flames)for(let o of obs)if(Math.abs(f.x-o.x)<35)o.x=-100;
+flames=flames.filter(f=>f.life>0&&f.x<670);obs=obs.filter(o=>o.x>-60);items=items.filter(a=>a.x>-30);
+vy+=.55;dy+=vy;if(dy>205){dy=205;vy=0}
+for(let o of obs){let oy=o.t===2?225-o.h+Math.sin(o.p+tick/5)*15:250-o.h;if(105>o.x&&80<o.x+o.w&&dy+35>oy&&dy+4<oy+o.h)alive=false}
+for(let a of items)if(!a.got&&Math.abs(a.x-90)<29&&Math.abs(a.y-(dy+20))<35){a.got=true;if(a.t==="coin")coins++;else hearts++;document.getElementById("coins").textContent=coins;document.getElementById("hearts").textContent=hearts}
+}
+for(let o of obs){let oy=o.t===2?225-o.h+Math.sin(o.p+tick/5)*15:250-o.h;x.fillStyle=["#e979aa","#9a89c9","#83c8e8","#d99bc5"][o.t];
+if(o.t===0){x.beginPath();x.moveTo(o.x,250);x.lineTo(o.x+o.w/2,oy);x.lineTo(o.x+o.w,250);x.fill()}
+else if(o.t===1){x.beginPath();x.arc(o.x+o.w/2,250-o.h/2,o.w/2,0,7);x.fill()}
+else if(o.t===2){x.beginPath();x.ellipse(o.x+o.w/2,oy+o.h/2,o.w/2,o.h/2,0,0,7);x.fill()}
+else{x.fillRect(o.x,oy,o.w,o.h);x.fillStyle="#fff";x.fillRect(o.x+5,oy+5,o.w-10,4)}
+}
+for(let a of items)if(!a.got){x.font="24px Arial";x.fillText(a.t==="coin"?"🪙":"♡",a.x,a.y)}
+for(let f of flames){x.font="28px Arial";x.fillText("🔥",f.x,f.y)}
+// Little dragon drawn facing right
+x.save();x.translate(70,dy);
+x.fillStyle="#a28ce8";x.beginPath();x.moveTo(13,25);x.lineTo(-4,7);x.lineTo(22,16);x.fill();
+x.fillStyle="#9678d9";x.beginPath();x.ellipse(22,25,24,17,0,0,7);x.fill();
+x.fillStyle="#b5a1f2";x.beginPath();x.ellipse(36,12,17,13,0,0,7);x.fill();
+x.beginPath();x.moveTo(24,3);x.lineTo(26,-9);x.lineTo(34,4);x.fill();x.beginPath();x.moveTo(39,2);x.lineTo(49,-7);x.lineTo(47,9);x.fill();
+x.fillStyle="white";x.beginPath();x.arc(40,10,4,0,7);x.fill();x.fillStyle="#493a67";x.beginPath();x.arc(41,10,2,0,7);x.fill();
+x.fillStyle="#f5a2c7";x.beginPath();x.arc(48,17,4,0,7);x.fill();
+x.fillStyle="#ffd166";x.beginPath();x.moveTo(51,18);x.lineTo(65,24);x.lineTo(51,27);x.fill();
+x.strokeStyle="#7a61c6";x.lineWidth=4;x.beginPath();x.moveTo(10,37);x.lineTo(7,42);x.moveTo(30,37);x.lineTo(32,42);x.stroke();x.restore();
+if(!alive){x.fillStyle="#624d70";x.textAlign="center";x.font="bold 23px Trebuchet MS";x.fillText("Oh nooo! ♡",320,120);x.font="14px Trebuchet MS";x.fillText("JUMP ya AGAIN",320,145);x.textAlign="left"}
+}loop();
+
+/* Select the exact couple picture and build the puzzle */
+let photoURL="",pieces=[],selected=null;
+const input=document.getElementById("photoInput");
+input.addEventListener("change",()=>{if(!input.files[0])return;if(photoURL)URL.revokeObjectURL(photoURL);photoURL=URL.createObjectURL(input.files[0]);document.getElementById("photoPreview").src=photoURL;shufflePuzzle()});
+function shufflePuzzle(){pieces=Array.from({length:16},(_,i)=>i);do{for(let i=15;i>0;i--){let j=Math.floor(Math.random()*(i+1));[pieces[i],pieces[j]]=[pieces[j],pieces[i]]}}while(pieces.every((v,i)=>v===i));selected=null;renderPuzzle()}
+function renderPuzzle(){let p=document.getElementById("puzzle");p.innerHTML="";pieces.forEach((v,i)=>{let b=document.createElement("button");b.className="piece"+(selected===i?" selected":"");if(photoURL)b.style.setProperty("--photo",`url("${photoURL}")`);else b.style.background="#ffffff8a";b.style.backgroundPosition=`${v%4*100/3}% ${Math.floor(v/4)*100/3}%`;b.onclick=()=>{if(selected===null){selected=i;renderPuzzle()}else{[pieces[selected],pieces[i]]=[pieces[i],pieces[selected]];selected=null;renderPuzzle()}};p.appendChild(b)});document.getElementById("puzzleStatus").textContent=pieces.every((v,i)=>v===i)?"YAYYYYY! Hamari picture ban gayiiii ♡":""}
+shufflePuzzle();
+
+/* Tic-tac-toe against computer */
+let cells=Array(9).fill(""),finished=false;
+function winner(a){for(let l of [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]){let [i,j,k]=l;if(a[i]&&a[i]===a[j]&&a[j]===a[k])return a[i]}return a.every(Boolean)?"draw":null}
+function computer(){function find(m){for(let i=0;i<9;i++)if(!cells[i]){let a=cells.slice();a[i]=m;if(winner(a)===m)return i}return -1}let i=find("O");if(i<0)i=find("X");if(i<0&&!cells[4])i=4;if(i<0){let free=cells.map((v,j)=>v?null:j).filter(v=>v!==null);i=free[Math.floor(Math.random()*free.length)]}if(i>=0)cells[i]="O"}
+function renderBoard(){let b=document.getElementById("board");b.innerHTML="";cells.forEach((v,i)=>{let q=document.createElement("button");q.className="cell";q.textContent=v;q.onclick=()=>{if(finished||cells[i])return;cells[i]="X";let r=winner(cells);if(r){finish(r);renderBoard();return}computer();r=winner(cells);if(r)finish(r);else document.getElementById("status").textContent="Apki baari ♡";renderBoard()};b.appendChild(q)})}
+function finish(r){finished=true;document.getElementById("status").textContent=r==="draw"?"Draw ♡":r==="X"?"Ap jeet gaye! ♡":"Computer jeet gaya ♡"}
+function resetTTT(){cells=Array(9).fill("");finished=false;document.getElementById("status").textContent="Apki baari ♡";renderBoard()}resetTTT();
+
+/* Kiss screen */
+function rainHearts(){let icons=["♡","💗","💖","💕","✨","💋","🐰","🐇","🩷","💞"];for(let i=0;i<90;i++){let e=document.createElement("span");e.className="rain";e.textContent=icons[Math.floor(Math.random()*icons.length)];e.style.left=Math.random()*100+"vw";e.style.fontSize=16+Math.random()*25+"px";e.style.animationDuration=2.5+Math.random()*3.5+"s";e.style.animationDelay=Math.random()*1.3+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),7500)}let box=document.getElementById("kissbox");box.innerHTML="";for(let i=0;i<16;i++){let s=document.createElement("span");s.textContent=icons[Math.floor(Math.random()*icons.length)];box.appendChild(s)}}
+</script>
+</body>
+</html>
